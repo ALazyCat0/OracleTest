@@ -1,0 +1,14 @@
+server:
+  port: 8042
+  
+spring:
+  datasource:
+    driver-class-name: oracle.jdbc.driver.OracleDriver
+    url: jdbc:oracle:thin:@127.0.0.1:1521:orcl
+    username: C##zzh
+    password: zzh
+ 
+mybatis:
+  config-location: classpath:mybatis/mybatis-config.xml  # mybatis配置文件所在路径
+  type-aliases-package: com.zzh.pojo              # 所有Entity别名类所在包
+  mapper-locations: classpath:mybatis/mapper/*.xml    # mapper映射文件    

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript"src="js/jquery-1.12.4.min.js"></script>
+<script type="text/javascript"src="js/vue.js"></script>
+<script type="text/javascript"src="js/axios.min.js"></script>
+</head>
+<body>
+
+<div id="app">
+<input type="text" placeholder="请输入用户名" v-model="emp.name"><br>
+<input type="text" placeholder="请输入地址" v-model="emp.address"><br>
+<input type="text" placeholder="请输入电话" v-model="emp.tel"><br>
+<button @click="query()">动态查询员工</button>
+<table>
+<tr>
+<th>id</th>
+<th>name</th>
+<th>address</th>
+<th>tel</th>
+</tr>
+<tr v-for="(empolyee,index) in employees">
+<td>{{empolyee.id}}</td>
+<td>{{empolyee.name}}</td>
+<td>{{empolyee.address}}</td>
+<td>{{empolyee.tel}}</td>
+</tr>
+</table>
+</div>
+</body>
+<script type="text/javascript">
+var vm = new Vue({
+	el:"#app",
+	/* template:"<h1>{{msg}}</h1>", */
+	data:{
+		employees:[],
+		emp:{name:"",
+			 address:"",
+			 tel:""},
+		msg:"hello world"
+		},
+	
+	created:function(){
+		
+		axios.get("/getall")
+		.then(res=>{
+			this.employees=res.data;
+		})
+		.catch();
+	},
+	methods:{
+		query(){
+			vm.empolyees=[];
+			axios.post("query",this.emp)
+			.then(res=>{
+				console.info(res.data);			     
+				vm.empolyees=res.data;
+				console.info(vm.empolyees);
+				/*   this.$nextTick(() => {
+					  this.empolyees=res.data;
+				      }) */
+			})
+			.catch();
+		}
+	}
+})
+
+</script>
+</html>
